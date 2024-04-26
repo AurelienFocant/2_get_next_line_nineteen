@@ -3,7 +3,7 @@
 #include "libft.h"
 #include "get_next_line.h"
 
-int		ft_getlen(char *s, char c)
+int	ft_getlen(char *s, char c)
 {
 	int	i;
 
@@ -23,12 +23,12 @@ char	*ft_return_if_nl(char **str)
 	{
 		if ((ptr = ft_strchr(*str, '\n')))
 		{
-				res = ft_substr(*str, 0, ft_getlen(*str, '\n'));
-				tmp = ft_strdup(++ptr);
-				free(*str);
-				*str = ft_strdup(tmp); 
-				free(tmp);
-				return (res);
+			res = ft_substr(*str, 0, ft_getlen(*str, '\n'));
+			tmp = ft_strdup(++ptr);
+			free(*str);
+			*str = ft_strdup(tmp);
+			free(tmp);
+			return (res);
 		}
 	}
 	return (NULL);
@@ -37,7 +37,7 @@ char	*ft_return_if_nl(char **str)
 int	ft_read_fd(char *buff, int fd)
 {
 	int	count_read;
-	
+
 	if ((count_read = (read(fd, buff, BUFFER_SIZE))) < 0)
 	{
 		printf("error");
@@ -49,7 +49,7 @@ int	ft_read_fd(char *buff, int fd)
 		return (0);
 	}
 	else
-		buff[count_read] = '\0';	
+		buff[count_read] = '\0';
 	return (count_read);
 }
 
@@ -75,6 +75,6 @@ char	*get_next_line(int fd)
 			save = ft_strdup(tmp);
 			free(tmp);
 		}
-	}	
+	}
 	return (res);
 }

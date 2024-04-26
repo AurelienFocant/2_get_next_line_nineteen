@@ -8,7 +8,7 @@ int main()
 {
 	int fd;
 
-	fd = open("txt.txt2", O_RDONLY);
+	fd = open("babsurd.txt", O_RDONLY);
 	if (!fd)
 		return 0;
 	printf("%s\n", get_next_line(fd));
