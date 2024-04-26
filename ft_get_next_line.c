@@ -13,20 +13,20 @@ int		ft_getlen(char *s, char c)
 	return (i);
 }
 
-char	*ft_return_if_nl(char *str)
+char	*ft_return_if_nl(char **str)
 {
 	char	*ptr;
 	char	*res;
 	char	*tmp;
 
-	if (str)
+	if (*str)
 	{
-		if ((ptr = ft_strchr(str, '\n')))
+		if ((ptr = ft_strchr(*str, '\n')))
 		{
-				res = ft_substr(str, 0, ft_getlen(str, '\n'));
+				res = ft_substr(*str, 0, ft_getlen(*str, '\n'));
 				tmp = ft_strdup(++ptr);
-				free(str);
-				str = ft_strdup(tmp); 
+				free(*str);
+				*str = ft_strdup(tmp); 
 				free(tmp);
 				return (res);
 		}
@@ -36,9 +36,9 @@ char	*ft_return_if_nl(char *str)
 
 int	ft_read_fd(char *buff, int fd)
 {
-	int			count_read;
+	int	count_read;
 	
-	if ((count_read = (read(fd, buff, BUFFER_SIZE - 1))) < 0)
+	if ((count_read = (read(fd, buff, BUFFER_SIZE))) < 0)
 	{
 		printf("error");
 		return (-1);
@@ -60,7 +60,9 @@ char	*get_next_line(int fd)
 	char		*tmp;
 	char		buff[BUFFER_SIZE];
 
-	while (!(res = ft_return_if_nl(save)))
+	if (BUFFER_SIZE <= 1)
+		return (NULL);
+	while (!(res = ft_return_if_nl(&save)))
 	{
 		if (ft_read_fd(buff, fd) <= 0)
 			return (NULL);
