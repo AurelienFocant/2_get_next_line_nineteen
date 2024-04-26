@@ -2,7 +2,7 @@
 # define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 8
+# define BUFFER_SIZE 2000
 #endif
 
 char	*get_next_line(int fd);
