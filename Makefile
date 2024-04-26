@@ -8,10 +8,10 @@ NAME= a.out
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(CFLAGS) -g $^ -o $@
+	cc $() -g $^ libft.a -o $@
 
 %.o: %.c
-	cc $(CFLAGS) -g -c $^ -o $@
+	cc $() -g -c $^ -o $@
 
 clean:
 	rm -rf $(OBJ)
