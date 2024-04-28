@@ -1,4 +1,10 @@
+CC= /opt/homebrew/opt/llvm/bin/clang-18
+#CC= cc
+
 CFLAGS = -Wall -Werror -Wextra
+
+DEBUG = -fsanitize=address -g
+
 SRC= $(wildcard *.c)
 
 OBJ= $(SRC:.c=.o)
@@ -8,10 +14,10 @@ NAME= a.out
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $() -g $^ libft.a -o $@
+	$(CC) $(DEBUG) $^ libft.a -o $@
 
 %.o: %.c
-	cc $() -g -c $^ -o $@
+	$(CC) $(DEBUG) -c $^ -o $@
 
 clean:
 	rm -rf $(OBJ)

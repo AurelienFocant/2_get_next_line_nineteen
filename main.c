@@ -7,8 +7,11 @@
 int main()
 {
 	int fd;
+	int	*ptr;
 
-	fd = open("babsurd.txt", O_RDONLY);
+	ptr = malloc(8);
+
+	fd = open("txt.txt", O_RDONLY);
 	if (!fd)
 		return 0;
 	printf("%s\n", get_next_line(fd));
