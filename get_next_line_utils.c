@@ -89,3 +89,17 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	joined[i] = '\0';
 	return (joined);
 }
+
+size_t	ft_strncpy(char *dst, const char *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i] && i < n - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (ft_strlen(dst));
+}

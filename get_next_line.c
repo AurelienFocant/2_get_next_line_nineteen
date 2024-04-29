@@ -37,19 +37,11 @@ int	ft_read_fd(char *buff, int fd)
 {
 	int	count_read;
 
-	if ((count_read = (read(fd, buff, BUFFER_SIZE - 1))) < 0)
-	{
-		printf("error");
+	count_read = read(fd, buff, BUFFER_SIZE); 
+	if (count_read < 0)
 		return (-1);
-	}
-	else if (count_read == 0)
-	{
-		printf("EOF");
-		return (0);
-	}
 	else
-		buff[count_read] = '\0';
-	return (count_read);
+		return (count_read);
 }
 
 char	*get_next_line(int fd)
@@ -58,18 +50,27 @@ char	*get_next_line(int fd)
 	char		*res;
 	char		*tmp;
 	char		buff[BUFFER_SIZE];
+	int		count_read;
+	char		*str;
 
-	if (BUFFER_SIZE <= 1)
+	if (BUFFER_SIZE < 1)
 		return (NULL);
 	while (!(res = ft_return_if_nl(&save)))
 	{
-		if (ft_read_fd(buff, fd) <= 0)
+		count_read = ft_read_fd(buff, fd);
+		if (count_read < 0)
 			return (NULL);
+		else if (count_read && count_read <= BUFFER_SIZE)
+		{
+			str = malloc(sizeof(char) * (count_read + 1));
+			str[count_read] = '\0';
+			ft_strncpy(str, buff, count_read);
+		}
 		if (!save)
-			save = ft_strdup(buff);
+			save = ft_strdup(str);
 		else
 		{
-			tmp = ft_strjoin(save, buff);
+			tmp = ft_strjoin(save, str);
 			free(save);
 			save = ft_strdup(tmp);
 			free(tmp);
