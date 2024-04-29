@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-#include "libft.h"
 #include "get_next_line.h"
 
 int	ft_getlen(char *s, char c)
@@ -38,7 +37,7 @@ int	ft_read_fd(char *buff, int fd)
 {
 	int	count_read;
 
-	if ((count_read = (read(fd, buff, BUFFER_SIZE))) < 0)
+	if ((count_read = (read(fd, buff, BUFFER_SIZE - 1))) < 0)
 	{
 		printf("error");
 		return (-1);

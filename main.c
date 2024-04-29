@@ -1,19 +1,28 @@
-#include "libft.h"
-#include "get_next_line.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 16:04:54 by afocant           #+#    #+#             */
+/*   Updated: 2024/04/29 16:34:44 by afocant          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "get_next_line.h"
 #include <stdio.h>
 #include <fcntl.h>
 
-int main()
+int	main(void)
 {
-	int fd;
+	int	fd;
 	int	*ptr;
 
 	ptr = malloc(8);
-
-	fd = open("txt.txt", O_RDONLY);
+	fd = open("./txtfiles/txt.txt", O_RDONLY);
 	if (!fd)
-		return 0;
+		return (0);
 	printf("%s\n", get_next_line(fd));
 	printf("%s\n", get_next_line(fd));
 	printf("%s\n", get_next_line(fd));
