@@ -44,37 +44,75 @@ int	ft_read_fd(char *buff, int fd)
 		return (count_read);
 }
 
+char	*ft_cpybuff(char *buf, int count)
+{
+	int		i;
+	char	*str;
+
+	str = malloc((count + 1) * sizeof(char));
+	i = 0;
+	while (i < count)
+	{
+		str[i] = buf[i];
+		i++;
+	}	
+	str[i] = '\0';
+	return (str);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*save;
 	char		*res;
 	char		*tmp;
 	char		buff[BUFFER_SIZE];
-	int		count_read;
+	int			count_read;
 	char		*str;
 
 	if (BUFFER_SIZE < 1)
 		return (NULL);
-	while (!(res = ft_return_if_nl(&save)))
+	while(1)
 	{
-		count_read = ft_read_fd(buff, fd);
+		if (save)
+		{
+			res = ft_return_if_nl(&save);
+			if (res)
+				return (res);
+		}
+		count_read = read(fd, buff, BUFFER_SIZE); 
 		if (count_read < 0)
 			return (NULL);
-		else if (count_read && count_read <= BUFFER_SIZE)
+		if (!count_read)
 		{
-			str = malloc(sizeof(char) * (count_read + 1));
-			str[count_read] = '\0';
-			ft_strncpy(str, buff, count_read);
+			if (save)
+			{
+				res = ft_return_if_nl(&save);
+				if (res)
+					return (res);
+			}
+			else
+			{
+				if (save)
+				{
+					res = ft_strdup(save);
+					save = NULL;
+					free(save);
+					return (res);
+				}
+				else
+					return (NULL);
+			}
 		}
 		if (!save)
-			save = ft_strdup(str);
+			save = ft_cpybuff(buff, count_read);
 		else
 		{
+			str = ft_cpybuff(buff, count_read);
 			tmp = ft_strjoin(save, str);
 			free(save);
 			save = ft_strdup(tmp);
 			free(tmp);
+			free(str);
 		}
 	}
-	return (res);
 }

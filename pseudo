@@ -1,0 +1,21 @@
+if (save)
+	if (nl in save)
+		save is cut
+		return nl
+
+count_read = read(fd, buf, bufsiz)
+	if count_read < 0
+		return NULL
+	if count_read == 0
+		if (nl in save)
+			save is cut;
+			return nl;
+		else
+			return save;
+
+while ( i < count_read)
+	str[i] = buf[i]
+str[count_read] = '\0';
+
+if (!save)
+	save = strdup(str);
