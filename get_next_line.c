@@ -1,107 +1,50 @@
-#include <stdio.h>
-
 #include "get_next_line.h"
-
-int	ft_getlen(char *s, char c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	return (i);
-}
-
-char	*ft_return_if_nl(char **str)
-{
-	char	*ptr;
-	char	*res;
-	char	*tmp;
-
-	if (*str)
-	{
-		if ((ptr = ft_strchr(*str, '\n')))
-		{
-			res = ft_substr(*str, 0, ft_getlen(*str, '\n'));
-			tmp = ft_strdup(++ptr);
-			free(*str);
-			*str = ft_strdup(tmp);
-			free(tmp);
-			return (res);
-		}
-	}
-	return (NULL);
-}
-
-int	ft_read_fd(char *buff, int fd)
-{
-	int	count_read;
-
-	count_read = read(fd, buff, BUFFER_SIZE); 
-	if (count_read < 0)
-		return (-1);
-	else
-		return (count_read);
-}
-
-char	*ft_cpybuff(char *buf, int count)
-{
-	int		i;
-	char	*str;
-
-	str = malloc((count + 1) * sizeof(char));
-	i = 0;
-	while (i < count)
-	{
-		str[i] = buf[i];
-		i++;
-	}	
-	str[i] = '\0';
-	return (str);
-}
 
 char	*get_next_line(int fd)
 {
 	static char	*save;
+	char		*ptr;
 	char		*res;
 	char		*tmp;
 	char		buff[BUFFER_SIZE];
-	int			count_read;
 	char		*str;
+	int		count_read;
 
-	if (BUFFER_SIZE < 1)
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while(1)
+	while (1)
 	{
 		if (save)
 		{
-			res = ft_return_if_nl(&save);
-			if (res)
+			ptr = ft_strchr(save, '\n');
+			if (ptr)
+			{
+				res = ft_substr(save, 0, ptr - save + 1);
+				tmp = ft_strdup(++ptr);
+				save = ft_strdup(tmp);
+				free(tmp);
+				tmp = NULL;
 				return (res);
+			}
 		}
-		count_read = read(fd, buff, BUFFER_SIZE); 
+		count_read = read(fd, buff, BUFFER_SIZE);
 		if (count_read < 0)
+		{
+			free(save);
+			save = NULL;
 			return (NULL);
+		}
 		if (!count_read)
 		{
-			if (save)
+			if (save && *save != '\0')
 			{
-				res = ft_return_if_nl(&save);
-				if (res)
-					return (res);
+				res = ft_strdup(save); 	
+				free(save);
+				save = NULL;
+		        	return (res);
 			}
-			else
-			{
-				if (save)
-				{
-					res = ft_strdup(save);
-					save = NULL;
-					free(save);
-					return (res);
-				}
-				else
-					return (NULL);
-			}
+			return (NULL);
 		}
 		if (!save)
 			save = ft_cpybuff(buff, count_read);
@@ -109,10 +52,28 @@ char	*get_next_line(int fd)
 		{
 			str = ft_cpybuff(buff, count_read);
 			tmp = ft_strjoin(save, str);
+			free(str);
+			str = NULL;
 			free(save);
 			save = ft_strdup(tmp);
 			free(tmp);
-			free(str);
+			tmp = NULL;
+		}
+		ptr = ft_strchr(save, '\n');
+		if (ptr)
+		{
+			res = ft_substr(save, 0, ptr - save + 1);
+			tmp = ft_strdup(++ptr);
+			free(save);
+			save = ft_strdup(tmp);
+			free(tmp);
+			tmp = NULL;
+			if (*save == '\0')
+			{
+				free(save);
+				save = NULL;
+			}
+			return (res);
 		}
 	}
 }

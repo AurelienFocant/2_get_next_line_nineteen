@@ -3,7 +3,7 @@ CC= cc
 
 CFLAGS = -Wall -Werror -Wextra
 
-DEBUG = -fsanitize=address -g
+DEBUG = -fsanitize=address
 
 SRC= $(wildcard *.c)
 
@@ -14,10 +14,10 @@ NAME= a.out
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(DEBUG) $^ -o $@
+	$(CC) $(CFLAGS) $(DEBUG) -g $^ -o $@
 
 %.o: %.c
-	$(CC) $(DEBUG) -c $^ -o $@
+	$(CC) $(CFLAGS) $(DEBUG) -g -c $^ -o $@
 
 clean:
 	rm -rf $(OBJ)

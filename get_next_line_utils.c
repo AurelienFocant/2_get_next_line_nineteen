@@ -63,6 +63,8 @@ char	*ft_strdup(const char *s1)
 
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (*s != (char) c)
 		if (*s++ == '\0')
 			return (NULL);
@@ -90,16 +92,32 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (joined);
 }
 
-size_t	ft_strncpy(char *dst, const char *src, size_t n)
+int	ft_getlen(char *s, char c)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (src[i] && i < n - 1)
-	{
-		dst[i] = src[i];
+	while (s[i] && s[i] != c)
 		i++;
-	}
-	dst[i] = '\0';
-	return (ft_strlen(dst));
+	return (i);
+}
+
+char	*ft_cpybuff(char *buf, int count)
+{
+	int		i;
+	char	*str;
+
+	if (!buf || count <= 0)
+		return (NULL);
+	str = malloc((count + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		str[i] = buf[i];
+		i++;
+	}	
+	str[i] = '\0';
+	return (str);
 }
