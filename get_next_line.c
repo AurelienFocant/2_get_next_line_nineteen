@@ -3,13 +3,12 @@
 char	*get_next_line(int fd)
 {
 	static char	*save;
+	int		count_read;
 	char		*ptr;
 	char		*res;
 	char		*tmp;
 	char		buff[BUFFER_SIZE];
 	char		*str;
-	int		count_read;
-
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -39,10 +38,10 @@ char	*get_next_line(int fd)
 		{
 			if (save && *save != '\0')
 			{
-				res = ft_strdup(save); 	
+				res = ft_strdup(save);
 				free(save);
 				save = NULL;
-		        	return (res);
+				return (res);
 			}
 			return (NULL);
 		}

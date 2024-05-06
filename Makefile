@@ -1,23 +1,25 @@
 #CC= /opt/homebrew/opt/llvm/bin/clang-18
-CC= cc
+CC = cc
+
+aSTACK = -Wl,--stack,4194304
 
 CFLAGS = -Wall -Werror -Wextra
 
-DEBUG = -fsanitize=address
+DEBUG = -fsanitize=address -fsanitize=undefined
 
-SRC= $(wildcard *.c)
+SRC = $(wildcard *.c)
 
-OBJ= $(SRC:.c=.o)
+OBJ = $(SRC:.c=.o)
 
-NAME= a.out
+NAME = a.out
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(DEBUG) -g $^ -o $@
+	$(CC) $(STACK) $(CFLAGS) $(DEBUG) -g $^ -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(DEBUG) -g -c $^ -o $@
+	$(CC) $(STACK) $(CFLAGS) $(DEBUG) -g -c $^ -o $@
 
 clean:
 	rm -rf $(OBJ)
