@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:23:17 by afocant           #+#    #+#             */
-/*   Updated: 2024/04/29 16:34:13 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:15:38 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*ft_strdup(const char *s1)
 	char	*s2;
 	int		i;
 
+	if (!s1)
+		return (NULL);
 	len = ft_strlen(s1);
 	s2 = malloc(sizeof(char) * (len + 1));
 	if (!s2)
@@ -89,6 +91,33 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (*s2)
 		joined[i++] = *s2++;
 	joined[i] = '\0';
+	return (joined);
+}
+
+char	*ft_joinstrs(char *s1, char *s2)
+{
+	size_t	total_len;
+	char	*joined;
+	int		i;
+
+	if (!s1)
+		s1 = ft_strdup("");
+	if (!s2)
+		s2 = ft_strdup("");
+	total_len = ft_strlen(s1) + ft_strlen(s2);
+	joined = malloc(sizeof(char) * (total_len + 1));
+	if (joined == NULL)
+		return (NULL);
+	i = 0;
+	while (*s1)
+		joined[i++] = *s1++;
+	while (*s2)
+		joined[i++] = *s2++;
+	joined[i] = '\0';
+	free(s1);
+	s1 = NULL;
+	free(s2);
+	s2 = NULL;
 	return (joined);
 }
 

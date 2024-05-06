@@ -11,7 +11,11 @@ char	*get_next_line(int fd)
 	char		*str;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		free(save);
+		save = NULL;
 		return (NULL);
+	}
 	while (1)
 	{
 		if (save)
@@ -21,7 +25,11 @@ char	*get_next_line(int fd)
 			{
 				res = ft_substr(save, 0, ptr - save + 1);
 				tmp = ft_strdup(++ptr);
-				save = ft_strdup(tmp);
+				free(save);
+				if (*tmp)
+					save = ft_strdup(tmp);
+				else
+					save = NULL;
 				free(tmp);
 				tmp = NULL;
 				return (res);
