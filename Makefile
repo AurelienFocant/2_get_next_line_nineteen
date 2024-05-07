@@ -1,11 +1,9 @@
 #CC= /opt/homebrew/opt/llvm/bin/clang-18
 CC = cc
 
-aSTACK = -Wl,--stack,4194304
-
 CFLAGS = -Wall -Werror -Wextra
 
-DEBUG = -fsanitize=address -fsanitize=undefined
+aDEBUG = -fsanitize=address -fsanitize=undefined
 
 SRC = $(wildcard *.c)
 

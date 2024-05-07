@@ -35,8 +35,9 @@ char	*ft_get_line_in_save(char **save)
 		return (NULL);
 }
 
-char	*ft_read_into_buff(int fd, char *buff, char **save)
+char	*ft_read_into_buff(int fd, char **save)
 {
+	char		buff[BUFFER_SIZE];
 	int			count_read;
 	char		*str;
 	char		*tmp;
@@ -97,7 +98,6 @@ char	*get_next_line(int fd)
 {
 	static char	*save;
 	char		*res;
-	char		buff[BUFFER_SIZE];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
@@ -108,7 +108,7 @@ char	*get_next_line(int fd)
 	res = ft_get_line_in_save(&save);
 	if (res)
 		return (res);
-	res = ft_read_into_buff(fd, buff, &save);
+	res = ft_read_into_buff(fd, &save);
 	if (res)
 		return (res);
 	return (NULL);
