@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:04:54 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/07 12:03:33 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/07 22:51:09 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	main(int ac, char **av)
 {
-	int	fd;
+	int		fd;
 	char	*line;
 
 	if (ac != 2)
@@ -24,11 +24,9 @@ int	main(int ac, char **av)
 		printf("args !");
 		return (1);
 	}
-
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		return (2);
-
 	line = "";
 	while (line)
 	{

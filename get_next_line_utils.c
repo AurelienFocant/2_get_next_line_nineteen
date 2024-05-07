@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:23:17 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/07 18:13:07 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/07 23:07:24 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (--i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*s2;
-	size_t	i;
-
-	if (!len || !s || start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	s2 = malloc(sizeof(char) * (len + 1));
-	if (!s2)
-		return (NULL);
-	i = 0;
-	while (s[start] && len--)
-		s2[i++] = s[start++];
-	s2[i] = '\0';
-	return (s2);
-}
-
-char	*ft_strdup(const char *s1)
+char	*ft_duplicate_str(const char *s1, char c)
 {
 	size_t	len;
 	char	*s2;
@@ -49,16 +30,22 @@ char	*ft_strdup(const char *s1)
 
 	if (!s1)
 		return (NULL);
-	len = ft_strlen(s1);
+	len = 0;
+	while (s1[len] != c)
+		len++;
+	if (c != '\0')
+		len++;
 	s2 = malloc(sizeof(char) * (len + 1));
 	if (!s2)
 		return (NULL);
 	i = 0;
-	while (s1[i])
+	while (s1[i] != c)
 	{
 		s2[i] = s1[i];
 		i++;
 	}
+	if (c != '\0')
+		s2[i++] = c;
 	s2[i] = '\0';
 	return (s2);
 }
@@ -75,26 +62,21 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_joinstrs(char *s1, char *s2)
 {
-	size_t	total_len;
 	char	*joined;
 	int		i;
 
-	if (!s1)
+	joined = NULL;
+	if (!s1 || !s2)
 	{
-		joined = ft_strdup(s2);
+		if (!s1)
+			joined = ft_duplicate_str(s2, '\0');
+		else if (!s2)
+			joined = ft_duplicate_str(s1, '\0');
 		if (!joined)
 			return (NULL);
 		return (joined);
 	}
-	if (!s2)
-	{
-		joined = ft_strdup(s1);
-		if (!joined)
-			return (NULL);
-		return (joined);
-	}
-	total_len = ft_strlen(s1) + ft_strlen(s2);
-	joined = malloc(sizeof(char) * (total_len + 1));
+	joined = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (joined == NULL)
 		return (NULL);
 	i = 0;
@@ -104,16 +86,6 @@ char	*ft_joinstrs(char *s1, char *s2)
 		joined[i++] = *s2++;
 	joined[i] = '\0';
 	return (joined);
-}
-
-int	ft_getlen(char *s, char c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	return (i);
 }
 
 char	*ft_cpybuff(char *buf, int count)
@@ -131,7 +103,7 @@ char	*ft_cpybuff(char *buf, int count)
 	{
 		str[i] = buf[i];
 		i++;
-	}	
+	}
 	str[i] = '\0';
 	return (str);
 }
