@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 22:11:49 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/07 23:12:09 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/07 23:34:32 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	ft_join_save_str(char **save, char **str)
 	if (!tmp)
 	{
 		free(*save);
+		*save = NULL;
 		return ;
 	}
 	if (*save)
@@ -96,6 +97,7 @@ char	*ft_read_into_buff(int fd, char **save)
 		if (!str)
 		{
 			free(*save);
+			*save = NULL;
 			return (NULL);
 		}
 		ft_join_save_str(save, &str);
