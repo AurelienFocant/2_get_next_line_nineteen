@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:03:38 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/06 15:16:51 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/07 12:30:54 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 8372224
+#  define BUFFER_SIZE 10
 # endif
 
 #include "get_next_line.h"
@@ -27,7 +27,7 @@ char	*ft_strdup(const char *s1);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strncpy(char *dst, const char *src, size_t n);
-int	ft_getlen(char *s, char c);
+int		ft_getlen(char *s, char c);
 char	*ft_cpybuff(char *buf, int count);
 char	*ft_joinstrs(char *s1, char *s2);
 

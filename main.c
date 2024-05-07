@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:04:54 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/06 15:08:58 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/07 12:03:33 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac, char **av)
 		printf("%s", line);
 		line = get_next_line(fd);
 	}
-
+	free(line);
 	close(fd);
 	return (0);
 }

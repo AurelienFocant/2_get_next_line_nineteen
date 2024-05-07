@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:23:17 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/06 15:15:38 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/07 15:08:43 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,19 @@ char	*ft_joinstrs(char *s1, char *s2)
 	int		i;
 
 	if (!s1)
-		s1 = ft_strdup("");
+	{
+		joined = ft_strdup(s2);
+		if (!joined)
+			return (NULL);
+		return (joined);
+	}
 	if (!s2)
-		s2 = ft_strdup("");
+	{
+		joined = ft_strdup(s1);
+		if (!joined)
+			return (NULL);
+		return (joined);
+	}
 	total_len = ft_strlen(s1) + ft_strlen(s2);
 	joined = malloc(sizeof(char) * (total_len + 1));
 	if (joined == NULL)
@@ -114,10 +124,6 @@ char	*ft_joinstrs(char *s1, char *s2)
 	while (*s2)
 		joined[i++] = *s2++;
 	joined[i] = '\0';
-	free(s1);
-	s1 = NULL;
-	free(s2);
-	s2 = NULL;
 	return (joined);
 }
 

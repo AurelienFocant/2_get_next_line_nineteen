@@ -1,14 +1,103 @@
 #include "get_next_line.h"
 
+char	*ft_divide_save(char **save, char *nl)
+{
+	char	*res;
+	char	*tmp;
+
+	res = ft_substr(*save, 0, nl - *save + 1);
+	tmp = ft_strdup(++nl);
+	if (*tmp)
+	{
+		free(*save);
+		*save = tmp;
+	}
+	else
+	{
+		free(tmp);
+		free(*save);
+		*save = NULL;
+	}
+	tmp = NULL;
+	return (res);
+}
+
+char	*ft_get_line_in_save(char **save)
+{
+	char	*nl;
+
+	if (!*save)
+		return (NULL);
+	nl = ft_strchr(*save, '\n');
+	if (nl)
+		return (ft_divide_save(save, nl));
+	else
+		return (NULL);
+}
+
+char	*ft_read_into_buff(int fd, char *buff, char **save)
+{
+	int			count_read;
+	char		*str;
+	char		*tmp;
+	char		*nl;
+	char		*res;
+
+	res = NULL;
+	count_read = read(fd, buff, BUFFER_SIZE);
+	while (count_read)
+	{
+		if (count_read < 0)
+		{
+			free(*save);
+			*save = NULL;
+			return (NULL);
+		}
+		str = ft_cpybuff(buff, count_read);
+		if (!str)
+		{
+			free(*save);
+			return (NULL);
+		}
+		tmp = ft_joinstrs(*save, str);
+		free(str);
+		str = NULL;
+		if (!tmp)
+		{
+			free(*save);
+			return (NULL);
+		}
+		if (*save)
+			free(*save);
+		*save = tmp;
+		tmp = NULL;
+		if (!*save)
+			return (NULL);
+		nl = ft_strchr(*save, '\n');
+		if (nl)
+			return (ft_divide_save(save, nl));
+		count_read = read(fd, buff, BUFFER_SIZE);
+	}
+	nl = ft_strchr(*save, '\n');
+	if (nl)
+		return (ft_divide_save(save, nl));
+	if (*save)
+	{
+		if (**save)
+			res = ft_strdup(*save);
+		free(*save);
+		*save = NULL;
+		if (res)
+			return (res);
+	}
+	return (NULL);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*save;
-	int		count_read;
-	char		*ptr;
 	char		*res;
-	char		*tmp;
 	char		buff[BUFFER_SIZE];
-	char		*str;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
@@ -16,71 +105,13 @@ char	*get_next_line(int fd)
 		save = NULL;
 		return (NULL);
 	}
-	while (1)
-	{
-		if (save)
-		{
-			ptr = ft_strchr(save, '\n');
-			if (ptr)
-			{
-				res = ft_substr(save, 0, ptr - save + 1);
-				tmp = ft_strdup(++ptr);
-				free(save);
-				if (*tmp)
-					save = ft_strdup(tmp);
-				else
-					save = NULL;
-				free(tmp);
-				tmp = NULL;
-				return (res);
-			}
-		}
-		count_read = read(fd, buff, BUFFER_SIZE);
-		if (count_read < 0)
-		{
-			free(save);
-			save = NULL;
-			return (NULL);
-		}
-		if (!count_read)
-		{
-			if (save && *save != '\0')
-			{
-				res = ft_strdup(save);
-				free(save);
-				save = NULL;
-				return (res);
-			}
-			return (NULL);
-		}
-		if (!save)
-			save = ft_cpybuff(buff, count_read);
-		else
-		{
-			str = ft_cpybuff(buff, count_read);
-			tmp = ft_strjoin(save, str);
-			free(str);
-			str = NULL;
-			free(save);
-			save = ft_strdup(tmp);
-			free(tmp);
-			tmp = NULL;
-		}
-		ptr = ft_strchr(save, '\n');
-		if (ptr)
-		{
-			res = ft_substr(save, 0, ptr - save + 1);
-			tmp = ft_strdup(++ptr);
-			free(save);
-			save = ft_strdup(tmp);
-			free(tmp);
-			tmp = NULL;
-			if (*save == '\0')
-			{
-				free(save);
-				save = NULL;
-			}
-			return (res);
-		}
-	}
+	res = ft_get_line_in_save(&save);
+	if (res)
+		return (res);
+	res = ft_read_into_buff(fd, buff, &save);
+	if (res)
+		return (res);
+	return (NULL);
 }
+/*
+*/
