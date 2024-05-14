@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 22:11:49 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/07 23:34:32 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/14 20:54:42 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,8 @@ char	*ft_read_into_buff(int fd, char **save)
 	count_read = read(fd, buff, BUFFER_SIZE);
 	while (count_read)
 	{
-		if (count_read < 0)
-		{
-			free(*save);
-			*save = NULL;
-			return (NULL);
-		}
 		str = ft_cpybuff(buff, count_read);
-		if (!str)
+		if (!str || count_read < 0)
 		{
 			free(*save);
 			*save = NULL;
@@ -110,9 +104,13 @@ char	*ft_read_into_buff(int fd, char **save)
 
 char	*get_next_line(int fd)
 {
-	static char	*save;
-	char		*res;
+	static char		*save;
+	char			*res;
+	struct rlimit	stacklim;
 
+	if (getrlimit(RLIMIT_STACK, &stacklim) == 0)
+		if ((long long unsigned) BUFFER_SIZE >= stacklim.rlim_cur)
+			return (NULL);
 	res = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{

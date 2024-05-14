@@ -3,7 +3,7 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra
 
-aDEBUG = -fsanitize=address -fsanitize=undefined
+DEBUG = -fsanitize=address -fsanitize=undefined
 
 SRC = $(wildcard *.c)
 
