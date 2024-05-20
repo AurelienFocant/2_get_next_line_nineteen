@@ -1,128 +1,113 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 22:11:49 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/14 20:54:42 by afocant          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
-char	*ft_divide_save(char **save)
+char	*ft_free_and_null(char **str)
 {
-	char	*res;
-	char	*tmp;
-	char	*nl;
-
-	if (!*save)
-		return (NULL);
-	nl = ft_strchr(*save, '\n');
-	if (!nl)
-		return (NULL);
-	res = ft_duplicate_str(*save, '\n');
-	tmp = ft_duplicate_str(++nl, '\0');
-	if (*tmp)
+	if (*str)
 	{
-		free(*save);
-		*save = tmp;
-	}
-	else
-	{
-		free(tmp);
-		free(*save);
-		*save = NULL;
-	}
-	tmp = NULL;
-	return (res);
-}
-
-char	*ft_reached_eof(char **save)
-{
-	char		*res;
-
-	res = NULL;
-	if (ft_strchr(*save, '\n'))
-		return (ft_divide_save(save));
-	if (*save)
-	{
-		if (**save)
-			res = ft_duplicate_str(*save, '\0');
-		free(*save);
-		*save = NULL;
-		if (res)
-			return (res);
+		free(*str);
+		*str = NULL;
 	}
 	return (NULL);
 }
 
-void	ft_join_save_str(char **save, char **str)
+char	*ft_divide_stash(char **stash)
 {
+	char	*nl;
+	char	*line;
 	char	*tmp;
 
-	tmp = ft_joinstrs(*save, *str);
-	free(*str);
-	*str = NULL;
-	if (!tmp)
+	if (!*stash)
+		return (NULL);
+	nl = ft_strchr(*stash, '\n');
+	if (!nl)
+		return (NULL);
+	line = ft_duplicate_str(*stash, '\n');
+	tmp = ft_duplicate_str(++nl, '\0');
+	if (*tmp)
 	{
-		free(*save);
-		*save = NULL;
-		return ;
+		free(*stash);
+		*stash = tmp;
 	}
-	if (*save)
-		free(*save);
-	*save = tmp;
+	else
+	{
+		free(tmp);
+		free(*stash);
+		*stash = NULL;
+	}
 	tmp = NULL;
+	return (line);
 }
 
-char	*ft_read_into_buff(int fd, char **save)
+char	*ft_join_stash_buff(char *stash, char *buf, size_t buf_len)
 {
-	char		buff[BUFFER_SIZE];
-	int			count_read;
-	char		*str;
+	size_t	stash_len;
+	size_t	i;
+	size_t	j;
+	char	*res;
 
-	count_read = read(fd, buff, BUFFER_SIZE);
-	while (count_read)
+	if (!stash)
+		stash_len = 0;
+	else
+		stash_len = ft_strlen(stash);
+	res = malloc(sizeof(char) * stash_len + buf_len + 1);
+	if (!res)
+		return (ft_free_and_null(&stash));
+	i = 0;
+	j = 0;
+	while (i < stash_len)
+		res[j++] = stash[i++];
+	i = 0;
+	while (i < buf_len)
+		res[j++] = buf[i++];
+	res[j] = '\0';
+	if (stash)
+		free(stash);
+	return (res);
+}
+
+char	*ft_read_file(int fd, char **stash)
+{
+	char	buffer[BUFFER_SIZE];
+	char	*line;
+	int		bytes_read;
+
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_read == -1)
+		return (ft_free_and_null(stash));
+	while (bytes_read)
 	{
-		str = ft_cpybuff(buff, count_read);
-		if (!str || count_read < 0)
-		{
-			free(*save);
-			*save = NULL;
-			return (NULL);
-		}
-		ft_join_save_str(save, &str);
-		if (ft_strchr(*save, '\n'))
-			return (ft_divide_save(save));
-		count_read = read(fd, buff, BUFFER_SIZE);
+		*stash = ft_join_stash_buff(*stash, buffer, (size_t) bytes_read);
+		line = ft_divide_stash(stash);
+		if (line)
+			return (line);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
-	return (ft_reached_eof(save));
+	if (stash && *stash)
+	{
+		line = *stash;
+		*stash = NULL;
+		return (line);
+	}
+	else
+	{
+		free(*stash);
+		*stash = NULL;
+	}
+	return (NULL);
 }
 
 char	*get_next_line(int fd)
 {
-	static char		*save;
-	char			*res;
-	struct rlimit	stacklim;
+	static char	*stash;
+	char		*line;
 
-	if (getrlimit(RLIMIT_STACK, &stacklim) == 0)
-		if ((long long unsigned) BUFFER_SIZE >= stacklim.rlim_cur)
-			return (NULL);
-	res = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
-	{
-		free(save);
-		save = NULL;
-		return (NULL);
-	}
-	res = ft_divide_save(&save);
-	if (res)
-		return (res);
-	res = ft_read_into_buff(fd, &save);
-	if (res)
-		return (res);
+	if (fd == -1 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) == -1)
+		return (ft_free_and_null(&stash));
+	line = ft_divide_stash(&stash);
+	if (line)
+		return (line);
+	line = ft_read_file(fd, &stash);
+	if (line)
+		return (line);
 	return (NULL);
 }

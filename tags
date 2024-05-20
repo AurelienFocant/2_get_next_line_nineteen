@@ -1,0 +1,12 @@
+Mmain	main.c	/^int	main(int ac, char **av)$/
+get_next_line	get_next_line.c	/^char	*get_next_line(int fd)$/
+ft_cpybuff	old_gnl/get_next_line_utils.c	/^char	*ft_cpybuff(char *buf, int count)$/
+ft_divide_save	old_gnl/get_next_line.c	/^char	*ft_divide_save(char **save)$/
+ft_duplicate_str	old_gnl/get_next_line_utils.c	/^char	*ft_duplicate_str(const char *s1, char c)$/
+ft_join_save_str	old_gnl/get_next_line.c	/^void	ft_join_save_str(char **save, char **str)$/
+ft_joinstrs	old_gnl/get_next_line_utils.c	/^char	*ft_joinstrs(char *s1, char *s2)$/
+ft_reached_eof	old_gnl/get_next_line.c	/^char	*ft_reached_eof(char **save)$/
+ft_read_into_buff	old_gnl/get_next_line.c	/^char	*ft_read_into_buff(int fd, char **save)$/
+ft_strchr	old_gnl/get_next_line_utils.c	/^char	*ft_strchr(const char *s, int c)$/
+ft_strlen	old_gnl/get_next_line_utils.c	/^size_t	ft_strlen(const char *s)$/
+get_next_line	old_gnl/get_next_line.c	/^char	*get_next_line(int fd)$/
