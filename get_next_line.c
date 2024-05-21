@@ -1,40 +1,21 @@
 #include "get_next_line.h"
 
-char	*ft_free_and_null(char **str)
-{
-	if (*str)
-	{
-		free(*str);
-		*str = NULL;
-	}
-	return (NULL);
-}
+char	*ft_cut_stash(char *stash, char *start);
 
 char	*ft_divide_stash(char **stash)
 {
 	char	*nl;
 	char	*line;
-	char	*tmp;
 
-	if (!*stash)
+	if (!stash || !*stash)
 		return (NULL);
 	nl = ft_strchr(*stash, '\n');
 	if (!nl)
 		return (NULL);
 	line = ft_duplicate_str(*stash, '\n');
-	tmp = ft_duplicate_str(++nl, '\0');
-	if (*tmp)
-	{
-		free(*stash);
-		*stash = tmp;
-	}
-	else
-	{
-		free(tmp);
-		free(*stash);
-		*stash = NULL;
-	}
-	tmp = NULL;
+	if (!line)
+		return (ft_free_and_null(stash));
+	*stash = ft_cut_stash(*stash, ++nl);
 	return (line);
 }
 

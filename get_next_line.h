@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:03:38 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/14 21:04:49 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/21 13:48:39 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,14 @@
 # include <sys/resource.h>
 
 char	*get_next_line(int fd);
-char	*ft_read_into_buff(int fd, char **save);
-void	ft_join_save_str(char **save, char **str);
-char	*ft_reached_eof(char **save);
-char	*ft_divide_save(char **save);
+char	*ft_read_file(int fd, char **stash);
+char	*ft_join_stash_buff(char *stash, char *buf, size_t buf_len);
+char	*ft_divide_stash(char **stash);
 
-char	*ft_cpybuff(char *buf, int count);
-char	*ft_joinstrs(char *s1, char *s2);
-char	*ft_strchr(const char *s, int c);
-char	*ft_duplicate_str(const char *s1, char c);
+char	*ft_free_and_null(char **str);
 size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
+
+char	*ft_duplicate_str(const char *s1, char c);
 
 #endif

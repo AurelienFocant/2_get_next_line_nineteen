@@ -6,11 +6,21 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:23:17 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/14 21:05:30 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/21 15:00:15 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_free_and_null(char **str)
+{
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+	return (NULL);
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -58,4 +68,24 @@ char	*ft_duplicate_str(const char *s1, char c)
 		s2[i++] = c;
 	s2[i] = '\0';
 	return (s2);
+}
+
+char	*ft_cut_stash(char *stash, char *start)
+{
+	size_t	len;
+	size_t	i;
+	char	*res;
+
+	len = ft_strlen(start);
+	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return (ft_free_and_null(&stash));
+	i = 0;
+	while (i < len)
+		res[i++] = *start++;
+	res[i] = '\0';
+	if (!*res)
+		ft_free_and_null(&res);
+	ft_free_and_null(&stash);
+	return (res);
 }
