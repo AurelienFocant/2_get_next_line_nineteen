@@ -52,8 +52,8 @@ char	*ft_join_stash_buff(char *stash, char *buf, size_t buf_len)
 	res = malloc(sizeof(char) * stash_len + buf_len + 1);
 	if (!res)
 		return (ft_free_and_null(&stash));
-	i = 0;
 	j = 0;
+	i = 0;
 	while (i < stash_len)
 		res[j++] = stash[i++];
 	i = 0;
@@ -89,11 +89,7 @@ char	*ft_read_file(int fd, char **stash)
 		return (line);
 	}
 	else
-	{
-		free(*stash);
-		*stash = NULL;
-	}
-	return (NULL);
+		return (ft_free_and_null(stash));
 }
 
 char	*get_next_line(int fd)
