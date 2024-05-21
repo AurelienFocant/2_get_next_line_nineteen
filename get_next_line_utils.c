@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:23:17 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/21 15:00:15 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/21 16:05:27 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 char	*ft_free_and_null(char **str)
 {
-	if (*str)
-	{
-		free(*str);
-		*str = NULL;
-	}
+	free(*str);
+	*str = NULL;
 	return (NULL);
 }
 
@@ -42,35 +39,32 @@ char	*ft_strchr(const char *s, int c)
 	return ((char *) s);
 }
 
-char	*ft_duplicate_str(const char *s1, char c)
+char	*ft_extract_line(char *stash)
 {
 	size_t	len;
-	char	*s2;
+	char	*line;
 	int		i;
 
-	if (!s1)
+	if (!stash)
 		return (NULL);
 	len = 0;
-	while (s1[len] != c)
+	while (stash[len] != '\n')
 		len++;
-	if (c != '\0')
-		len++;
-	s2 = malloc(sizeof(char) * (len + 1));
-	if (!s2)
+	line = malloc(sizeof(char) * (len + 1 + 1));
+	if (!line)
 		return (NULL);
 	i = 0;
-	while (s1[i] != c)
+	while (stash[i] != '\n')
 	{
-		s2[i] = s1[i];
+		line[i] = stash[i];
 		i++;
 	}
-	if (c != '\0')
-		s2[i++] = c;
-	s2[i] = '\0';
-	return (s2);
+	line[i++] = '\n';
+	line[i] = '\0';
+	return (line);
 }
 
-char	*ft_cut_stash(char *stash, char *start)
+char	*ft_trim_stash(char *stash, char *start)
 {
 	size_t	len;
 	size_t	i;

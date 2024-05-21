@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:03:38 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/21 13:48:39 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/21 16:12:32 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_divide_stash(char **stash);
 char	*ft_free_and_null(char **str);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
-
-char	*ft_duplicate_str(const char *s1, char c);
+char	*ft_extract_line(char *stash);
+char	*ft_trim_stash(char *stash, char *start);
 
 #endif

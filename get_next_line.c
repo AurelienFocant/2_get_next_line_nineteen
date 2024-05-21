@@ -1,6 +1,16 @@
-#include "get_next_line.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 16:02:57 by afocant           #+#    #+#             */
+/*   Updated: 2024/05/21 16:12:20 by afocant          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-char	*ft_cut_stash(char *stash, char *start);
+#include "get_next_line.h"
 
 char	*ft_divide_stash(char **stash)
 {
@@ -12,10 +22,10 @@ char	*ft_divide_stash(char **stash)
 	nl = ft_strchr(*stash, '\n');
 	if (!nl)
 		return (NULL);
-	line = ft_duplicate_str(*stash, '\n');
+	line = ft_extract_line(*stash);
 	if (!line)
 		return (ft_free_and_null(stash));
-	*stash = ft_cut_stash(*stash, ++nl);
+	*stash = ft_trim_stash(*stash, ++nl);
 	return (line);
 }
 
