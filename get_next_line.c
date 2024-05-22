@@ -51,8 +51,7 @@ char	*ft_join_stash_buff(char *stash, char *buf, size_t buf_len)
 	while (i < buf_len)
 		res[j++] = buf[i++];
 	res[j] = '\0';
-	if (stash)
-		free(stash);
+	free(stash);
 	return (res);
 }
 

@@ -1,9 +1,10 @@
 Mmain	main.c	/^int	main(int ac, char **av)$/
 ft_divide_stash	get_next_line.c	/^char	*ft_divide_stash(char **stash)$/
-ft_duplicate_str	get_next_line_utils.c	/^char	*ft_duplicate_str(const char *s1, char c)$/
+ft_extract_line	get_next_line_utils.c	/^char	*ft_extract_line(char *stash)$/
 ft_free_and_null	get_next_line_utils.c	/^char	*ft_free_and_null(char **str)$/
 ft_join_stash_buff	get_next_line.c	/^char	*ft_join_stash_buff(char *stash, char *buf, s/
 ft_read_file	get_next_line.c	/^char	*ft_read_file(int fd, char **stash)$/
 ft_strchr	get_next_line_utils.c	/^char	*ft_strchr(const char *s, int c)$/
 ft_strlen	get_next_line_utils.c	/^size_t	ft_strlen(const char *s)$/
+ft_trim_stash	get_next_line_utils.c	/^char	*ft_trim_stash(char *stash, char *start)$/
 get_next_line	get_next_line.c	/^char	*get_next_line(int fd)$/
