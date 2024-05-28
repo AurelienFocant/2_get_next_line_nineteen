@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:02:57 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/23 19:48:36 by afocant          ###   ########.fr       */
+/*   Updated: 2024/05/28 14:09:54 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,20 @@ char	*ft_join_stash_buff(char *stash, char *buf, size_t buf_len)
 
 char	*ft_read_file(int fd, char **stash)
 {
-	char	buffer[FD_MAX][BUFFER_SIZE];
+	char	buffer[BUFFER_SIZE];
 	char	*line;
 	int		bytes_read;
 
-	bytes_read = read(fd, buffer[fd], BUFFER_SIZE);
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read == -1)
 		return (ft_free_and_null(stash));
 	while (bytes_read)
 	{
-		*stash = ft_join_stash_buff(*stash, buffer[fd], (size_t) bytes_read);
+		*stash = ft_join_stash_buff(*stash, buffer, (size_t) bytes_read);
 		line = ft_divide_stash(stash);
 		if (line)
 			return (line);
-		bytes_read = read(fd, buffer[fd], BUFFER_SIZE);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (stash && *stash)
 	{
@@ -84,15 +84,15 @@ char	*ft_read_file(int fd, char **stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[FD_MAX];
 	char		*line;
 
 	if (fd == -1 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) == -1)
-		return (ft_free_and_null(&stash));
-	line = ft_divide_stash(&stash);
+		return (ft_free_and_null(&stash[fd]));
+	line = ft_divide_stash(&stash[fd]);
 	if (line)
 		return (line);
-	line = ft_read_file(fd, &stash);
+	line = ft_read_file(fd, &stash[fd]);
 	if (line)
 		return (line);
 	return (NULL);
