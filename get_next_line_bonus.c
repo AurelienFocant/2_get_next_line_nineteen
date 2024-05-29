@@ -87,7 +87,9 @@ char	*get_next_line(int fd)
 	static char	*stash[FD_MAX];
 	char		*line;
 
-	if (fd == -1 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) == -1)
+	if (fd == -1)
+		return (NULL);
+	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) == -1)
 		return (ft_free_and_null(&stash[fd]));
 	line = ft_divide_stash(&stash[fd]);
 	if (line)
