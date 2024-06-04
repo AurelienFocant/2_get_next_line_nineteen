@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:03:38 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/21 16:12:32 by afocant          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:37:33 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
+# endif
+
+# ifndef ONE_KiB
+#  define ONE_KiB 1024
 # endif
 
 # include "get_next_line.h"

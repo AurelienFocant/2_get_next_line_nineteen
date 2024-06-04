@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:02:57 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/21 16:12:20 by afocant          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:38:12 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ char	*get_next_line(int fd)
 {
 	static char	*stash;
 	char		*line;
+	struct rlimit	stacklim;
 
+	if (getrlimit(RLIMIT_STACK, &stacklim) == 0)
+		if ((long long unsigned) BUFFER_SIZE >= stacklim.rlim_cur - 10 * ONE_KiB)
+			return (NULL);
 	if (fd == -1)
 		return (NULL);
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) == -1)
