@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 19:41:18 by afocant           #+#    #+#             */
-/*   Updated: 2024/06/04 19:41:51 by afocant          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:45:51 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/resource.h>
+# include <sys/syslimits.h>
 
 char	*get_next_line(int fd);
 char	*ft_read_file(int fd, char **stash);
