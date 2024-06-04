@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 16:03:38 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/28 16:56:37 by afocant          ###   ########.fr       */
+/*   Created: 2024/06/04 19:41:18 by afocant           #+#    #+#             */
+/*   Updated: 2024/06/04 19:41:51 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #  define FD_MAX 256
 # endif
 
-# include "get_next_line.h"
+# include "get_next_line_bonus.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/resource.h>
