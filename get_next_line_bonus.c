@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:02:57 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/28 14:09:54 by afocant          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:02:16 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*get_next_line(int fd)
 	static char	*stash[FD_MAX];
 	char		*line;
 
-	if (fd == -1)
+	if (fd == -1 || fd >= FD_MAX)
 		return (NULL);
 	if (BUFFER_SIZE <= 0 || read(fd, NULL, 0) == -1)
 		return (ft_free_and_null(&stash[fd]));
