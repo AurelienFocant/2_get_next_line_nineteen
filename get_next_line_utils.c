@@ -6,7 +6,7 @@
 /*   By: afocant <afocant@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:23:17 by afocant           #+#    #+#             */
-/*   Updated: 2024/05/21 16:05:27 by afocant          ###   ########.fr       */
+/*   Updated: 2024/06/05 23:30:09 by afocant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 char	*ft_free_and_null(char **str)
 {
-	free(*str);
-	*str = NULL;
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
 	return (NULL);
 }
 
