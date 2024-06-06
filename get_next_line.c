@@ -40,7 +40,7 @@ char	*ft_join_stash_buff(char *stash, char *buf, size_t buf_len)
 		stash_len = 0;
 	else
 		stash_len = ft_strlen(stash);
-	res = malloc(sizeof(char) * stash_len + buf_len + 1);
+	res = malloc(sizeof(char) * (stash_len + buf_len + 1));
 	if (!res)
 		return (ft_free_and_null(&stash));
 	j = 0;
@@ -51,7 +51,7 @@ char	*ft_join_stash_buff(char *stash, char *buf, size_t buf_len)
 	while (i < buf_len)
 		res[j++] = buf[i++];
 	res[j] = '\0';
-	free(stash);
+	ft_free_and_null(&stash);
 	return (res);
 }
 

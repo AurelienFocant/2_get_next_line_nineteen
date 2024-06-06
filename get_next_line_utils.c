@@ -50,7 +50,7 @@ char	*ft_extract_line(char *stash)
 	len = 0;
 	while (stash[len] != '\n')
 		len++;
-	line = malloc(sizeof(char) * (len + 1 + 1));
+	line = malloc(sizeof(char) * (len + ft_strlen("\n") + 1));
 	if (!line)
 		return (NULL);
 	i = 0;
